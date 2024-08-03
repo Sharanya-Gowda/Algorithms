@@ -1,41 +1,55 @@
+global N
 N = 4
-ld = [0] * 30
-rd = [0] * 30
-cl = [0] * 30
 
 def printSolution(board):
-	for i in range(N):
-		for j in range(N):
-			print(" Q " if board[i][j] == 1 else " . ", end="")
-		print()
+    for i in range(N):
+        for j in range(N):
+            print(board[i][j], end=' ')
+        print()
+
+def isSafe(board, row, col):
+    # Check if there is a queen in the current row on the left side
+    for i in range(col):
+        if board[row][i] == 1:
+            return False
+
+    # Check upper diagonal on the left side
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
+
+    # Check lower diagonal on the left side
+    for i, j in zip(range(row, N, 1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
+
+    return True
 
 def solveNQUtil(board, col):
-	if col >= N:
-		return True
+    # If all queens are placed successfully
+    if col >= N:
+        printSolution(board)
+        print()  # Blank line between solutions
+        return
 
-	for i in range(N):
-		if (ld[i - col + N - 1] != 1 and rd[i + col] != 1) and cl[i] != 1:
-			board[i][col] = 1
-			ld[i - col + N - 1] = rd[i + col] = cl[i] = 1
+    # Try placing this queen in all rows one by one
+    for i in range(N):
+        if isSafe(board, i, col):
+            board[i][col] = 1  # Place queen
 
-			if solveNQUtil(board, col + 1):
-				return True
+            # Recur to place rest of the queens
+            solveNQUtil(board, col + 1)
 
-			board[i][col] = 0 
-			ld[i - col + N - 1] = rd[i + col] = cl[i] = 0
-
-	return False
-
+            # Backtrack
+            board[i][col] = 0
 
 def solveNQ():
-	board = [[0 for _ in range(N)] for _ in range(N)]
+    board = [[0] * N for _ in range(N)]
 
-	if not solveNQUtil(board, 0):
-		print("Solution does not exist")
-		return False
+    solveNQUtil(board, 0)
 
-	printSolution(board)
-	return True
+    #if not any(1 in row for row in board):
+    #    print("No solutions exist")
 
-if __name__ == "__main__":
-	solveNQ()
+
+solveNQ()
