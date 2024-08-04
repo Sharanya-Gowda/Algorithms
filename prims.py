@@ -23,8 +23,6 @@ def prim(graph, start_vertex):
 
 # Prompting user for graph input
 print("Enter the graph in the format {'vertex': [('neighbor', weight), ...]}")
-print("Example: {'A':[('B',1),('C',3)], 'B':[('A',1),('C',3),('D',6)], ...}")
-
 graph_input = input("Enter the graph: ")
 graph = eval(graph_input)  # Using eval to parse the input as a dictionary
 
