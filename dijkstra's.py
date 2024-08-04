@@ -14,8 +14,7 @@ def dijkstra(graph, start):
                 distances[neighbor] = distance  
 
     return distances
-
-
+    
 # Take user inputs to build the graph
 graph = {} #dictionary
 n = int(input("Enter the number of edges: "))
