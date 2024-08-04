@@ -1,3 +1,4 @@
+#time complexity ElogV where E is edges and V is vertices
 def prim(graph, start_vertex):
     mst = []
     edges = []
@@ -17,22 +18,18 @@ def prim(graph, start_vertex):
         if v not in visited:
             mst.append((u, v, weight))
             add_edges(v)
+
     return mst
 
-def get_user_input():
-    graph = {}
-    num_vertices = int(input("Enter the number of vertices: "))
-    for _ in range(num_vertices):
-        vertex = input("Enter vertex: ")
-        graph[vertex] = []
-        num_edges = int(input(f"Enter the number of edges for vertex {vertex}: "))
-        for _ in range(num_edges):
-            neighbor = input("Enter neighbor vertex: ")
-            weight = int(input(f"Enter weight for edge {vertex}-{neighbor}: "))
-            graph[vertex].append((neighbor, weight))
-    start_vertex = input("Enter the start vertex: ")
-    return graph, start_vertex
+# Prompting user for graph input
+print("Enter the graph in the format {'vertex': [('neighbor', weight), ...]}")
+print("Example: {'A':[('B',1),('C',3)], 'B':[('A',1),('C',3),('D',6)], ...}")
 
-graph, start_vertex = get_user_input()
+graph_input = input("Enter the graph: ")
+graph = eval(graph_input)  # Using eval to parse the input as a dictionary
+
+start_vertex = input("Enter the start vertex: ")
+
+# Running Prim's algorithm
 mst = prim(graph, start_vertex)
 print("Minimum spanning tree:", mst)
