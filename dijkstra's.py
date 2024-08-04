@@ -5,18 +5,18 @@ def dijkstra(graph, start):
     unvisited = set(graph.keys()) #set
 
     while unvisited:
-        current_node = min(unvisited, key=distances.get) #current node is chosen based on the least distance from startNode
+        current_node = min(unvisited, key=distances.get) 
         unvisited.remove(current_node)
 
         for neighbor, weight in graph[current_node].items():
             distance = distances[current_node] + weight
-            if distance < distances[neighbor]:  #i.e if the distance from startNode->currentNode->neighbour  < distance from startNode->neighbour
+            if distance < distances[neighbor]:  
                 distances[neighbor] = distance  
 
     return distances
     
-# Take user inputs to build the graph
-graph = {} #dictionary
+
+graph = {} 
 n = int(input("Enter the number of edges: "))
 
 for _ in range(n):
