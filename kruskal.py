@@ -19,7 +19,7 @@ def union(parent, rank, x, y):
             rank[root_x] += 1
 
 def kruskal(graph):
-    min_spanning_tree=[]
+    mst=[]
     graph.sort(key=lambda item:item[2])
     parent={}
     rank={}
@@ -34,7 +34,7 @@ def kruskal(graph):
         root_u=find(parent,u)
         root_v=find(parent,v)
         if root_u!=root_v:
-            min_spanning_tree.append((u,v,weight))
+            mst.append((u,v,weight))
             union(parent,rank,root_u,root_v)
             
     return min_spanning_tree
@@ -49,5 +49,5 @@ for _ in range(n):
 min_spanning_tree=kruskal(graph)
 
 print("Min Tree")
-for u,v,weight in min_spanning_tree:
+for u,v,weight in mst:
     print(f"Edge {u} -> {v} Weight {weight}")
