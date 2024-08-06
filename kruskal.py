@@ -46,7 +46,7 @@ for _ in range(n):
     weight=int(weight)
     graph.append((u,v,weight))
     
-min_spanning_tree=kruskal(graph)
+mst=kruskal(graph)
 
 print("Min Tree")
 for u,v,weight in mst:
