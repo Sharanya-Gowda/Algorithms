@@ -1,37 +1,27 @@
-ansarr = []
-ans = []
-def copy_arr (arr):
-    for i in range(len(arr)):
-        ans.append(arr[i])
-def subset_sum(arr, index, target, dp):
-    if target == 0:
-        if len(ans) == 0:
-            copy_arr(ansarr)
-        return True
-    if index > len(arr) - 1:
-        return False
+def subsetSum(n, W, weights):
+    M = [[None] * (W + 1) for _ in range(n + 1)]
+    for i in range(n + 1):
+        M[i][0] = []
+    for i in range(1, n + 1):
+        for w in range(1, W + 1):
+            if weights[i-1] > w:
+                M[i][w] = M[i-1][w]
+            else:
+                if M[i-1][w] is not None:
+                    M[i][w] = M[i-1][w]
+                elif M[i-1][w - weights[i-1]] is not None:
+                    M[i][w] = M[i-1][w - weights[i-1]] + [weights[i-1]]
+                else:
+                    M[i][w] = None
+    return M[n][W]
 
-    if dp[index][target] != -1:
-        return dp[index][target]
+n = int(input("Enter the number of elements: "))
+weights = [int(input(f"Enter weight {i+1}: ")) for i in range(n)]
+W = int(input("Enter the target sum: "))
 
-    include = False
-    if arr[index] <= target:
-        ansarr.append(index)
-        include = subset_sum(arr, index + 1, target - arr[index], dp)
-        ansarr.pop()
-    exclude = subset_sum(arr, index + 1, target, dp)
-
-    result = include or exclude
-    dp[index][target] = result
-    return dp[index][target]
-
-arr = list(map(int, input("Enter the list of numbers (separated by spaces): ").split()))
-target = int(input("Enter the target sum: "))
-
-dp = [[-1 for _ in range(target + 1)] for _ in range(len(arr))]
-
-if subset_sum(arr, 0, target, dp):
-    print(f"A subset with sum {target} exists.\nIndex are the following")
-    print(ans)
+subset = subsetSum(n, W, weights)
+if subset is not None:
+    print(f"A subset with sum {W} exists.")
+    print("Weights contributing to the sum:", subset)
 else:
-    print(f"No subset with sum {target} exists.")
+    print(f"No subset with sum {W} exists.")
