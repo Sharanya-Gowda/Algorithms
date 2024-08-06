@@ -37,7 +37,7 @@ def kruskal(graph):
             mst.append((u,v,weight))
             union(parent,rank,root_u,root_v)
             
-    return min_spanning_tree
+    return mst
     
 graph=[]
 n=int(input("Enter the no of edges:"))
