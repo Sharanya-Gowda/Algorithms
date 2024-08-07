@@ -1,19 +1,19 @@
 def subsetSum(n, W, weights):
-    M = [[None] * (W + 1) for _ in range(n + 1)]
+    dp = [[None] * (W + 1) for _ in range(n + 1)]
     for i in range(n + 1):
-        M[i][0] = []
+        dp[i][0] = []
     for i in range(1, n + 1):
         for w in range(1, W + 1):
             if weights[i-1] > w:
-                M[i][w] = M[i-1][w]
+                dp[i][w] = dp[i-1][w]
             else:
-                if M[i-1][w] is not None:
-                    M[i][w] = M[i-1][w]
-                elif M[i-1][w - weights[i-1]] is not None:
-                    M[i][w] = M[i-1][w - weights[i-1]] + [weights[i-1]]
+                if dp[i-1][w] is not None:
+                    dp[i][w] = dp[i-1][w]
+                elif dp[i-1][w - weights[i-1]] is not None:
+                    dp[i][w] = dp[i-1][w - weights[i-1]] + [weights[i-1]]
                 else:
-                    M[i][w] = None
-    return M[n][W]
+                    dp[i][w] = None
+    return dp[n][W]
 
 n = int(input("Enter the number of elements: "))
 weights = [int(input(f"Enter weight {i+1}: ")) for i in range(n)]
